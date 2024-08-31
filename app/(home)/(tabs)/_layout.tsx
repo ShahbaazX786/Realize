@@ -1,4 +1,9 @@
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import {
+  FontAwesome,
+  FontAwesome6,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
 
@@ -33,7 +38,9 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome5 name="home" size={24} color="white" />}
+              icon={
+                <FontAwesome6 name="bolt-lightning" size={24} color="white" />
+              }
               focused={focused}
             />
           ),
@@ -46,7 +53,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome5 name="home" size={24} color="white" />}
+              icon={<MaterialIcons name="data-usage" size={24} color="white" />}
               focused={focused}
             />
           ),
@@ -59,7 +66,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome5 name="home" size={24} color="white" />}
+              icon={<FontAwesome name="dashboard" size={24} color="white" />}
               focused={focused}
             />
           ),
@@ -68,11 +75,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="features"
         options={{
-          title: "Profile",
+          title: "Features",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome5 name="home" size={24} color="white" />}
+              icon={<Ionicons name="options" size={24} color="white" />}
               focused={focused}
             />
           ),
@@ -81,11 +88,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="tips"
         options={{
-          title: "Profile",
+          title: "Tips",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome5 name="home" size={24} color="white" />}
+              icon={
+                <MaterialIcons
+                  name="tips-and-updates"
+                  size={24}
+                  color="white"
+                />
+              }
               focused={focused}
             />
           ),
