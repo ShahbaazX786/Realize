@@ -20,14 +20,13 @@ export default function TabLayout() {
           borderRadius: 50,
           paddingBottom: 0,
           overflow: "hidden",
-          marginHorizontal: 20,
-          marginBottom: 20,
+          marginHorizontal: 10,
+          marginBottom: 10,
           height: 80,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
-          position: "absolute",
         },
       }}
     >
@@ -39,7 +38,7 @@ export default function TabLayout() {
           tabBarIcon: ({ focused }) => (
             <TabIcon
               icon={
-                <FontAwesome6 name="bolt-lightning" size={24} color="white" />
+                <FontAwesome6 name="bolt-lightning" size={28} color="white" />
               }
               focused={focused}
             />
@@ -53,7 +52,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<MaterialIcons name="data-usage" size={24} color="white" />}
+              icon={<MaterialIcons name="data-usage" size={28} color="white" />}
               focused={focused}
             />
           ),
@@ -66,7 +65,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<FontAwesome name="dashboard" size={24} color="white" />}
+              icon={<FontAwesome name="dashboard" size={28} color="white" />}
               focused={focused}
             />
           ),
@@ -79,7 +78,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon
-              icon={<Ionicons name="options" size={24} color="white" />}
+              icon={<Ionicons name="options" size={28} color="white" />}
               focused={focused}
             />
           ),
@@ -112,12 +111,12 @@ const TabIcon = ({ focused, icon }: { icon: any; focused: boolean }) => {
   return (
     <View
       className={`flex flex-row justify-center items-center rounded-full ${
-        focused ? "bg-general-300" : ""
+        focused ? "bg-green-300" : ""
       }`}
     >
       <View
-        className={`rounded-full w-12 h-12 items-center justify-center ${
-          focused ? "bg-general-400" : ""
+        className={`rounded-full w-16 h-12 items-center justify-center ${
+          focused ? "bg-green-400" : ""
         }`}
       >
         {icon}
