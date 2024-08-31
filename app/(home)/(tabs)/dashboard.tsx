@@ -1,10 +1,11 @@
-import { Text, View } from "react-native";
+import TabHeader from "@/components/tabHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Dashboard = () => {
   return (
-    <View>
-      <Text>Dashboard</Text>
-    </View>
+    <SafeAreaView>
+      <TabHeader title={"Dashboard"} />
+    </SafeAreaView>
   );
 };
 
