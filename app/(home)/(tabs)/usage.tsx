@@ -1,10 +1,11 @@
-import { Text, View } from "react-native";
+import TabHeader from "@/components/tabHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Usage = () => {
   return (
-    <View>
-      <Text>Usage</Text>
-    </View>
+    <SafeAreaView>
+      <TabHeader title={"Usage"} />
+    </SafeAreaView>
   );
 };
 
