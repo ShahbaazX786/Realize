@@ -6,7 +6,7 @@ const TabHeader = ({ title }: { title: string }) => {
   const router = useRouter();
 
   return (
-    <View className="h-14 shadow-md bg-white flex flex-row justify-between items-center px-4">
+    <View className="h-14 shadow-md bg-white flex flex-row justify-between items-center px-4 w-full">
       <View>
         <Text className="text-xl font-semibold">{title}</Text>
       </View>
