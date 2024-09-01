@@ -1,3 +1,4 @@
+import BatteryCardLong from "@/components/batteryCardLong";
 import BatteryCardNormal from "@/components/batteryCardNormal";
 import TabHeader from "@/components/tabHeader";
 import { AntDesign, Feather, FontAwesome6, Fontisto } from "@expo/vector-icons";
@@ -75,6 +76,32 @@ const Dashboard = () => {
               value={"AC"}
               icon={<FontAwesome6 name="bolt" size={24} color="green" />}
             />
+          </View>
+        </View>
+
+        <View className="flex flex-row items-start justify-center pt-3">
+          <View className="w-1/2 pr-2 h-full">
+            <BatteryCardLong
+              title={"Battery Level"}
+              value={`${batteryLevel * 100}%`}
+              icon={<Feather name="battery-charging" size={24} color="green" />}
+            />
+          </View>
+          <View className="w-1/2">
+            <View>
+              <BatteryCardNormal
+                title={"Low Power Mode"}
+                value={lowPowerMode ? "On" : "Off"}
+                icon={<Feather name="power" size={24} color="green" />}
+              />
+            </View>
+            <View className="pt-3">
+              <BatteryCardNormal
+                title={"Low Power Mode"}
+                value={lowPowerMode ? "On" : "Off"}
+                icon={<Feather name="power" size={24} color="green" />}
+              />
+            </View>
           </View>
         </View>
       </View>
