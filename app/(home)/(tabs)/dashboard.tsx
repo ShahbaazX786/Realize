@@ -54,7 +54,7 @@ const Dashboard = () => {
     <SafeAreaView className="bg-white">
       <TabHeader title={"Dashboard"} />
       <ScrollView alwaysBounceVertical={true} scrollToOverflowEnabled>
-        <View className="bg-[#f4f4f5] flex flex-col justify-center items-center px-3 pt-3 mb-100">
+        <View className="bg-[#f4f4f5] flex flex-col justify-center items-center px-3 pt-3 mb-0 pb-20">
           <View className="flex flex-row items-start justify-center">
             <BatteryCardNormal
               title={"Battery Health"}
