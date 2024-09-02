@@ -11,10 +11,12 @@ const TabHeader = ({ title }: { title: string }) => {
         <Text className="text-xl font-semibold">{title}</Text>
       </View>
       <View className="flex flex-row justify-center items-center gap-5">
-        <TouchableOpacity onPress={() => router.replace("/premium")}>
+        <TouchableOpacity onPress={() => router.replace("/(features)/premium")}>
           <AntDesign name="staro" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.replace("/settings")}>
+        <TouchableOpacity
+          onPress={() => router.replace("/(features)/settings")}
+        >
           <Ionicons name="settings-outline" size={24} color="black" />
         </TouchableOpacity>
       </View>
