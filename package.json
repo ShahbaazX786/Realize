@@ -12,7 +12,8 @@
     "lint": "expo lint",
     "cc": "npx expo start -c",
     "init-lint": "npx expo lint",
-    "init-prettier": "npx expo install -- --save-dev prettier eslint-config-prettier eslint-plugin-prettier"
+    "init-prettier": "npx expo install -- --save-dev prettier eslint-config-prettier eslint-plugin-prettier",
+    "postinstall": "patch-package"
   },
   "jest": {
     "preset": "jest-expo"
