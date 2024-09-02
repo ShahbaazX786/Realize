@@ -17,8 +17,10 @@ const Tips = () => {
     <SafeAreaView>
       <TabHeader title={"Tips"} />
       <Accordion
+        variant="filled"
+        size="md"
         className="w-[90%] m-5 border border-outline-300"
-        type="multiple"
+        type="single"
       >
         <AccordionItem value="a" className="border-b border-outline-300">
           <AccordionHeader className="bg-background-0">
@@ -27,12 +29,22 @@ const Tips = () => {
                 return (
                   <>
                     <AccordionTitleText>
-                      What does the "type" prop of the Accordion component do?
+                      Reduce Screen Brightness
                     </AccordionTitleText>
                     {isExpanded ? (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-up"
+                        size={"xl"}
+                        color="black"
+                      />
                     ) : (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-down"
+                        size={"xl"}
+                        color="black"
+                      />
                     )}
                   </>
                 );
@@ -57,9 +69,19 @@ const Tips = () => {
                       Can I disable the whole accordion?
                     </AccordionTitleText>
                     {isExpanded ? (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-up"
+                        size={"xl"}
+                        color="black"
+                      />
                     ) : (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-down"
+                        size={"xl"}
+                        color="black"
+                      />
                     )}
                   </>
                 );
@@ -84,9 +106,19 @@ const Tips = () => {
                       controlled?
                     </AccordionTitleText>
                     {isExpanded ? (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-up"
+                        size={"xl"}
+                        color="black"
+                      />
                     ) : (
-                      <AccordionIcon as={Entypo} />
+                      <AccordionIcon
+                        as={Entypo}
+                        name="chevron-down"
+                        size={"xl"}
+                        color="black"
+                      />
                     )}
                   </>
                 );
