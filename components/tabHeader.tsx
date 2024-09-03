@@ -16,6 +16,7 @@ const TabHeader = ({ title }: { title: string }) => {
           <AntDesign name="staro" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={currentRoute.includes("settings")}
           onPress={() => router.replace("/(features)/settings")}
         >
           {currentRoute.includes("settings") ? (
