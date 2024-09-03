@@ -50,6 +50,10 @@ const Premium = () => {
               </Text>
             </View>
           </TouchableOpacity>
+          <Text className="text-center mt-4 text-gray-500">
+            Your subscription will be auto-renewed unless revoked at least 24
+            hours before the end of the current period
+          </Text>
         </View>
       </View>
     </SafeAreaView>
