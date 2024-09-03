@@ -1,4 +1,4 @@
-export const Tips = [
+const Tips = [
   {
     id: 1,
     tip: "Reduce Screen Brightness",
@@ -90,3 +90,119 @@ export const Tips = [
       "Avoid installing unnecessary software or apps that might consume extra resources or battery life. Regularly clean up your device to maintain optimal performance.",
   },
 ];
+
+const languages = [
+  {
+    id: 1,
+    name: "English",
+    value: "en",
+  },
+  {
+    id: 2,
+    name: "Español", // Spanish
+    value: "es",
+  },
+  {
+    id: 3,
+    name: "中文", // Chinese (Mandarin)
+    value: "zh",
+  },
+  {
+    id: 4,
+    name: "हिन्दी", // Hindi
+    value: "hi",
+  },
+  {
+    id: 5,
+    name: "العربية", // Arabic
+    value: "ar",
+  },
+  {
+    id: 6,
+    name: "Français", // French
+    value: "fr",
+  },
+  {
+    id: 7,
+    name: "Русский", // Russian
+    value: "ru",
+  },
+  {
+    id: 8,
+    name: "Português", // Portuguese
+    value: "pt",
+  },
+  {
+    id: 9,
+    name: "Deutsch", // German
+    value: "de",
+  },
+  {
+    id: 10,
+    name: "日本語", // Japanese
+    value: "ja",
+  },
+  {
+    id: 11,
+    name: "한국어", // Korean
+    value: "ko",
+  },
+  {
+    id: 12,
+    name: "Italiano", // Italian
+    value: "it",
+  },
+  {
+    id: 13,
+    name: "Türkçe", // Turkish
+    value: "tr",
+  },
+  {
+    id: 14,
+    name: "Nederlands", // Dutch
+    value: "nl",
+  },
+  {
+    id: 15,
+    name: "Svenska", // Swedish
+    value: "sv",
+  },
+];
+
+const theme = [
+  {
+    id: 1,
+    name: "System",
+    value: "system",
+  },
+  {
+    id: 2,
+    name: "Light",
+    value: "light",
+  },
+  {
+    id: 3,
+    name: "Dark",
+    value: "dark",
+  },
+];
+
+const temperatureScale = [
+  {
+    id: 1,
+    name: "Celsius (°C)",
+    value: "C",
+  },
+  {
+    id: 2,
+    name: "Fahrenheit (°F)",
+    value: "F",
+  },
+  {
+    id: 3,
+    name: "Kelvin (K)",
+    value: "K",
+  },
+];
+
+export { Tips, languages, theme, temperatureScale };
