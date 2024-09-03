@@ -7,6 +7,7 @@ const FeatureLayout = () => {
         name="premium"
         options={{ headerShown: false, presentation: "fullScreenModal" }}
       />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
     </Stack>
   );
 };
