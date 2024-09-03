@@ -9,7 +9,23 @@ const TabHeader = ({ title }: { title: string }) => {
   return (
     <View className="h-14 shadow-xl drop-shadow-lg bg-white  flex flex-row justify-between items-center px-4 w-full">
       <View>
-        <Text className="text-xl font-semibold">{title}</Text>
+        {currentRoute.includes("settings") ? (
+          <TouchableOpacity
+            onPress={() => router.push("/(home)/(tabs)/dashboard")}
+          >
+            <View className="flex flex-row justify-center items-center">
+              <Ionicons
+                name="arrow-back"
+                size={24}
+                color="black"
+                className="mr-4"
+              />
+              <Text className="text-xl font-semibold">{title}</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <Text className="text-xl font-semibold">{title}</Text>
+        )}
       </View>
       <View className="flex flex-row justify-center items-center gap-5">
         <TouchableOpacity onPress={() => router.replace("/(features)/premium")}>
