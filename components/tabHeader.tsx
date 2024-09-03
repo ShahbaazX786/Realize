@@ -1,9 +1,10 @@
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { usePathname, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const TabHeader = ({ title }: { title: string }) => {
   const router = useRouter();
+  const currentRoute = usePathname();
 
   return (
     <View className="h-14 shadow-xl drop-shadow-lg bg-white  flex flex-row justify-between items-center px-4 w-full">
@@ -17,7 +18,11 @@ const TabHeader = ({ title }: { title: string }) => {
         <TouchableOpacity
           onPress={() => router.replace("/(features)/settings")}
         >
-          <Ionicons name="settings-outline" size={24} color="black" />
+          {currentRoute.includes("settings") ? (
+            <MaterialIcons name="settings" size={24} color="green" />
+          ) : (
+            <Ionicons name="settings-outline" size={24} color="black" />
+          )}
         </TouchableOpacity>
       </View>
     </View>
