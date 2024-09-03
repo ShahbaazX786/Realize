@@ -24,18 +24,18 @@ const Tips = () => {
         </Text>
         <View className="pb-20">
           <Accordion
-            variant="filled"
+            variant="unfilled"
             size="md"
-            className="w-[90%] m-5 border border-outline-300"
+            className="w-[90%] m-5"
             type="single"
           >
             {batteryTips.map((item) => (
               <AccordionItem
                 value={item.tip}
                 key={item.id}
-                className="border-b border-outline-300"
+                className="rounded-lg"
               >
-                <AccordionHeader className="bg-background-0">
+                <AccordionHeader className="bg-white mt-5">
                   <AccordionTrigger>
                     {({ isExpanded }) => {
                       return (
@@ -46,14 +46,14 @@ const Tips = () => {
                           {isExpanded ? (
                             <AccordionIcon
                               as={Entypo}
-                              name="chevron-up"
+                              name="minus"
                               size={"xl"}
                               color="black"
                             />
                           ) : (
                             <AccordionIcon
                               as={Entypo}
-                              name="chevron-down"
+                              name="plus"
                               size={"xl"}
                               color="black"
                             />
