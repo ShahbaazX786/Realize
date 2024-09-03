@@ -6,7 +6,7 @@ const UpgradeCard = () => {
 
   return (
     <TouchableOpacity
-      className="flex flex-col bg-yellow-400 h-auto w-full p-4 rounded-2xl shadow-xl shadow-yellow-500 drop-shadow-xl"
+      className="flex flex-col bg-yellow-400 h-auto w-full p-6 rounded-2xl shadow-xl shadow-yellow-500 drop-shadow-xl"
       onPress={() => router.replace("/(features)/premium")}
     >
       <View className="flex flex-row justify-between items-center">

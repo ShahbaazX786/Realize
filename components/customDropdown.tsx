@@ -29,7 +29,7 @@ const CustomDropdown = ({
             className="mr-3"
             as={Entypo}
             name="chevron-down"
-            size={"xl"}
+            size={"sm"}
             color="black"
           />
         </SelectTrigger>

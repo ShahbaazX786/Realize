@@ -205,4 +205,11 @@ const temperatureScale = [
   },
 ];
 
-export { Tips, languages, theme, temperatureScale };
+const urls = {
+  playstore: "https://www.linkedin.com/in/shaik-shahbaaz-alam/",
+  github: "https://github.com/ShahbaazX786/Realize",
+  website: "https://angular-portfolio-sigma.vercel.app/home",
+  twitter: "https://twitter.com/shahbaazx24",
+};
+
+export { Tips, languages, theme, temperatureScale, urls };
