@@ -1,6 +1,7 @@
 import BatteryCardLong from "@/components/batteryCardLong";
 import BatteryCardNormal from "@/components/batteryCardNormal";
 import TabHeader from "@/components/tabHeader";
+import { getBatteryLevel, getBatteryState } from "@/lib/helper";
 import { AntDesign, Feather, FontAwesome6, Fontisto } from "@expo/vector-icons";
 import * as Battery from "expo-battery";
 import { useEffect, useState } from "react";
@@ -9,17 +10,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Dashboard = () => {
   const [batteryLevel, setBatteryLevel] = useState(0);
-  const [batteryState, setBatteryState] = useState(0);
+  const [batteryState, setBatteryState] = useState("");
   const [lowPowerMode, setLowPowerMode] = useState(false);
 
   useEffect(() => {
     async function fetchBatteryInfo() {
-      const level = await Battery.getBatteryLevelAsync();
-      const state = await Battery.getBatteryStateAsync();
       const powerState = await Battery.getPowerStateAsync();
-
-      setBatteryLevel(level);
-      setBatteryState(state);
+      setBatteryLevel(getBatteryLevel(powerState.batteryLevel));
+      setBatteryState(getBatteryState(powerState.batteryState));
       setLowPowerMode(powerState.lowPowerMode);
     }
 
@@ -27,13 +25,13 @@ const Dashboard = () => {
 
     const batteryLevelListener = Battery.addBatteryLevelListener(
       ({ batteryLevel }) => {
-        setBatteryLevel(batteryLevel);
+        setBatteryLevel(getBatteryLevel(batteryLevel));
       }
     );
 
     const batteryStateListener = Battery.addBatteryStateListener(
       ({ batteryState }) => {
-        setBatteryState(batteryState);
+        setBatteryState(getBatteryState(batteryState));
       }
     );
 
@@ -67,14 +65,26 @@ const Dashboard = () => {
             <View className="w-1/2 pr-2">
               <BatteryCardNormal
                 title={"Status"}
-                value={"Charging"}
-                icon={<Fontisto name="battery-full" size={28} color="green" />}
+                value={batteryState}
+                icon={
+                  <Fontisto
+                    name="battery-full"
+                    size={28}
+                    color={
+                      batteryState === "Full" || batteryState === "Charging"
+                        ? "green"
+                        : batteryState === "Discharging"
+                          ? "red"
+                          : "black"
+                    }
+                  />
+                }
               />
             </View>
             <View className="w-1/2">
               <BatteryCardNormal
                 title={"Charging Type"}
-                value={"AC"}
+                value={batteryState === "Charging" ? "AC" : "Unplugged"}
                 icon={<FontAwesome6 name="bolt" size={24} color="green" />}
               />
             </View>
@@ -84,9 +94,9 @@ const Dashboard = () => {
             <View className="w-1/2 pr-2 h-full">
               <BatteryCardLong
                 title={"Battery Level"}
-                value={Math.floor(batteryLevel)}
+                value={batteryLevel}
                 icon={
-                  <Feather name="battery-charging" size={24} color="green" />
+                  <Feather name="battery-charging" size={50} color="green" />
                 }
               />
             </View>
