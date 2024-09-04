@@ -4,6 +4,7 @@ import TabHeader from "@/components/tabHeader";
 import {
   getBatteryLevel,
   getBatteryState,
+  getBytesToMegabytes,
   getDeviceType,
   getSystemUptime,
 } from "@/lib/helper";
@@ -230,9 +231,9 @@ const Dashboard = () => {
             </View>
             <View className="w-1/2">
               <BatteryCardNormal
-                title={"Up Time"}
-                value={"s"}
-                icon={<FontAwesome6 name="bolt" size={24} color="green" />}
+                title={"Usable Ram"}
+                value={getBytesToMegabytes(Device.totalMemory)}
+                icon={<FontAwesome6 name="memory" size={24} color="green" />}
               />
             </View>
           </View>
