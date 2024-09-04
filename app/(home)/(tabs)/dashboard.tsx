@@ -20,7 +20,7 @@ import {
 } from "@expo/vector-icons";
 import * as Battery from "expo-battery";
 import * as Device from "expo-device";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -36,7 +36,7 @@ const Dashboard = () => {
     maxMemory: 0,
     upTime: 0,
   });
-  const upTimeRef = useRef(0);
+  // const upTimeRef = useRef(0);
 
   const fetchBatteryInfo = useCallback(async () => {
     const powerState = await Battery.getPowerStateAsync();
@@ -54,7 +54,7 @@ const Dashboard = () => {
       Device.getMaxMemoryAsync(),
       Device.getUptimeAsync(),
     ]);
-    upTimeRef.current = systemUptime;
+    // upTimeRef.current = systemUptime;
     setDeviceInfo({ isRooted, features, maxMemory, upTime: systemUptime });
   }, []);
 
@@ -62,14 +62,13 @@ const Dashboard = () => {
     fetchDeviceInfo();
     fetchBatteryInfo();
 
-    const upTimeInterval = setInterval(() => {
-      upTimeRef.current += 1; // Update ref value
-      setDeviceInfo((prev) => ({
-        ...prev,
-        upTime: upTimeRef.current, // Update state with current ref value
-      }));
-      console.log(deviceInfo.upTime);
-    }, 1000);
+    // const upTimeInterval = setInterval(() => {
+    //   upTimeRef.current += 60;
+    //   setDeviceInfo((prev) => ({
+    //     ...prev,
+    //     upTime: upTimeRef.current,
+    //   }));
+    // }, 60000);
 
     const batteryLevelListener = Battery.addBatteryLevelListener(
       ({ batteryLevel }) => {
@@ -99,12 +98,12 @@ const Dashboard = () => {
     );
 
     return () => {
-      clearInterval(upTimeInterval);
+      // clearInterval(upTimeInterval);
       batteryLevelListener.remove();
       batteryStateListener.remove();
       lowPowerModeListener.remove();
     };
-  }, [deviceInfo.upTime, fetchBatteryInfo, fetchDeviceInfo]);
+  }, [fetchBatteryInfo, fetchDeviceInfo]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -240,7 +239,7 @@ const Dashboard = () => {
           <View className="flex flex-row items-start justify-center mt-3">
             <BatteryCardNormal
               title={"Up Time"}
-              value={getSystemUptime(deviceInfo.upTime)}
+              value={getSystemUptime(deviceInfo.upTime).slice(0, -3)}
               icon={<Ionicons name="timer" size={24} color="green" />}
             />
           </View>
