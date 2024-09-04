@@ -1,54 +1,109 @@
 import BatteryCardLong from "@/components/batteryCardLong";
 import BatteryCardNormal from "@/components/batteryCardNormal";
 import TabHeader from "@/components/tabHeader";
-import { AntDesign, Feather, FontAwesome6, Fontisto } from "@expo/vector-icons";
+import {
+  getBatteryLevel,
+  getBatteryState,
+  getBytesToMegabytes,
+  getDeviceType,
+  getSystemUptime,
+} from "@/lib/helper";
+import {
+  AntDesign,
+  Entypo,
+  Feather,
+  FontAwesome5,
+  FontAwesome6,
+  Fontisto,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import * as Battery from "expo-battery";
-import { useEffect, useState } from "react";
+import * as Device from "expo-device";
+import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Dashboard = () => {
-  const [batteryLevel, setBatteryLevel] = useState(0);
-  const [batteryState, setBatteryState] = useState(0);
-  const [lowPowerMode, setLowPowerMode] = useState(false);
+  const [batteryInfo, setBatteryInfo] = useState({
+    batteryLevel: 0,
+    batteryState: "",
+    lowPowerMode: false,
+  });
+  const [deviceInfo, setDeviceInfo] = useState({
+    isRooted: false,
+    features: [],
+    maxMemory: 0,
+    upTime: 0,
+  });
+  // const upTimeRef = useRef(0);
+
+  const fetchBatteryInfo = useCallback(async () => {
+    const powerState = await Battery.getPowerStateAsync();
+    setBatteryInfo({
+      batteryLevel: getBatteryLevel(powerState.batteryLevel),
+      batteryState: getBatteryState(powerState.batteryState),
+      lowPowerMode: powerState.lowPowerMode,
+    });
+  }, []);
+
+  const fetchDeviceInfo = useCallback(async () => {
+    const [isRooted, features, maxMemory, systemUptime] = await Promise.all([
+      Device.isRootedExperimentalAsync(),
+      Device.getPlatformFeaturesAsync(),
+      Device.getMaxMemoryAsync(),
+      Device.getUptimeAsync(),
+    ]);
+    // upTimeRef.current = systemUptime;
+    setDeviceInfo({ isRooted, features, maxMemory, upTime: systemUptime });
+  }, []);
 
   useEffect(() => {
-    async function fetchBatteryInfo() {
-      const level = await Battery.getBatteryLevelAsync();
-      const state = await Battery.getBatteryStateAsync();
-      const powerState = await Battery.getPowerStateAsync();
-
-      setBatteryLevel(level);
-      setBatteryState(state);
-      setLowPowerMode(powerState.lowPowerMode);
-    }
-
+    fetchDeviceInfo();
     fetchBatteryInfo();
+
+    // const upTimeInterval = setInterval(() => {
+    //   upTimeRef.current += 60;
+    //   setDeviceInfo((prev) => ({
+    //     ...prev,
+    //     upTime: upTimeRef.current,
+    //   }));
+    // }, 60000);
 
     const batteryLevelListener = Battery.addBatteryLevelListener(
       ({ batteryLevel }) => {
-        setBatteryLevel(batteryLevel);
+        setBatteryInfo((prev) => ({
+          ...prev,
+          level: getBatteryLevel(batteryLevel),
+        }));
       }
     );
 
     const batteryStateListener = Battery.addBatteryStateListener(
       ({ batteryState }) => {
-        setBatteryState(batteryState);
+        setBatteryInfo((prev) => ({
+          ...prev,
+          state: getBatteryState(batteryState),
+        }));
       }
     );
 
     const lowPowerModeListener = Battery.addLowPowerModeListener(
       ({ lowPowerMode }) => {
-        setLowPowerMode(lowPowerMode);
+        setBatteryInfo((prev) => ({
+          ...prev,
+          lowPowerMode,
+        }));
       }
     );
 
     return () => {
+      // clearInterval(upTimeInterval);
       batteryLevelListener.remove();
       batteryStateListener.remove();
       lowPowerModeListener.remove();
     };
-  }, []);
+  }, [fetchBatteryInfo, fetchDeviceInfo]);
 
   return (
     <SafeAreaView className="bg-white">
@@ -57,25 +112,48 @@ const Dashboard = () => {
         <View className="bg-[#f4f4f5] flex flex-col justify-center items-center px-3 pt-3 mb-0 pb-20">
           <View className="flex flex-row items-start justify-center">
             <BatteryCardNormal
-              title={"Battery Health"}
-              value={"Good"}
-              icon={<AntDesign name="heart" size={24} color="green" />}
+              title={"Device Name"}
+              value={`${Device.brand}  ${Device.designName}`}
+              icon={<Entypo name="mobile" size={24} color="black" />}
             />
           </View>
 
           <View className="flex flex-row items-start justify-center pt-3">
             <View className="w-1/2 pr-2">
               <BatteryCardNormal
-                title={"Status"}
-                value={"Charging"}
-                icon={<Fontisto name="battery-full" size={28} color="green" />}
+                title={"Battery Status"}
+                value={batteryInfo.batteryState}
+                icon={
+                  <Fontisto
+                    name="battery-full"
+                    size={28}
+                    color={
+                      batteryInfo.batteryState === "Full" ||
+                      batteryInfo.batteryState === "Charging"
+                        ? "green"
+                        : batteryInfo.batteryState === "Discharging"
+                          ? "red"
+                          : "black"
+                    }
+                  />
+                }
               />
             </View>
             <View className="w-1/2">
               <BatteryCardNormal
                 title={"Charging Type"}
-                value={"AC"}
-                icon={<FontAwesome6 name="bolt" size={24} color="green" />}
+                value={
+                  batteryInfo.batteryState === "Charging" ? "AC" : "Unplugged"
+                }
+                icon={
+                  <FontAwesome6
+                    name="bolt"
+                    size={24}
+                    color={
+                      batteryInfo.batteryState !== "Charging" ? "gray" : "green"
+                    }
+                  />
+                }
               />
             </View>
           </View>
@@ -84,25 +162,31 @@ const Dashboard = () => {
             <View className="w-1/2 pr-2 h-full">
               <BatteryCardLong
                 title={"Battery Level"}
-                value={Math.floor(batteryLevel)}
+                value={batteryInfo.batteryLevel}
                 icon={
-                  <Feather name="battery-charging" size={24} color="green" />
+                  <Feather name="battery-charging" size={50} color="green" />
                 }
               />
             </View>
             <View className="w-1/2">
               <View>
                 <BatteryCardNormal
-                  title={"Low Power Mode"}
-                  value={lowPowerMode ? "On" : "Off"}
-                  icon={<Feather name="power" size={24} color="green" />}
+                  title={"Battery Saver Mode"}
+                  value={batteryInfo.lowPowerMode ? "On" : "Off"}
+                  icon={
+                    <MaterialIcons
+                      name="energy-savings-leaf"
+                      size={24}
+                      color="green"
+                    />
+                  }
                 />
               </View>
               <View className="pt-3">
                 <BatteryCardNormal
-                  title={"Low Power Mode"}
-                  value={lowPowerMode ? "On" : "Off"}
-                  icon={<Feather name="power" size={24} color="green" />}
+                  title={"Battery Health"}
+                  value={"Good"}
+                  icon={<AntDesign name="heart" size={24} color="green" />}
                 />
               </View>
             </View>
@@ -111,34 +195,53 @@ const Dashboard = () => {
           <View className="flex flex-row items-start justify-center pt-3">
             <View className="w-1/2 pr-2">
               <BatteryCardNormal
-                title={"Status"}
-                value={"Charging"}
-                icon={<Fontisto name="battery-full" size={28} color="green" />}
+                title={"Device Manufacturer"}
+                value={Device.manufacturer}
+                icon={
+                  <MaterialIcons
+                    name="precision-manufacturing"
+                    size={24}
+                    color="green"
+                  />
+                }
               />
             </View>
             <View className="w-1/2">
               <BatteryCardNormal
-                title={"Charging Type"}
-                value={"AC"}
-                icon={<FontAwesome6 name="bolt" size={24} color="green" />}
+                title={"Category"}
+                value={getDeviceType(Device.deviceType)}
+                icon={<Feather name="smartphone" size={24} color="black" />}
               />
             </View>
           </View>
           <View className="flex flex-row items-start justify-center pt-3">
             <View className="w-1/2 pr-2">
               <BatteryCardNormal
-                title={"Status"}
-                value={"Charging"}
-                icon={<Fontisto name="battery-full" size={28} color="green" />}
+                title={"Root Access"}
+                value={deviceInfo.isRooted ? "Enabled" : "Not Enabled"}
+                icon={
+                  <FontAwesome5
+                    name="hashtag"
+                    size={24}
+                    color={deviceInfo.isRooted ? "red" : "green"}
+                  />
+                }
               />
             </View>
             <View className="w-1/2">
               <BatteryCardNormal
-                title={"Charging Type"}
-                value={"AC"}
-                icon={<FontAwesome6 name="bolt" size={24} color="green" />}
+                title={"Usable Ram"}
+                value={getBytesToMegabytes(Device.totalMemory)}
+                icon={<FontAwesome6 name="memory" size={24} color="green" />}
               />
             </View>
+          </View>
+          <View className="flex flex-row items-start justify-center mt-3">
+            <BatteryCardNormal
+              title={"Up Time"}
+              value={getSystemUptime(deviceInfo.upTime).slice(0, -3)}
+              icon={<Ionicons name="timer" size={24} color="green" />}
+            />
           </View>
         </View>
       </ScrollView>
