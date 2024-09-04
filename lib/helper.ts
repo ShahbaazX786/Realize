@@ -60,10 +60,19 @@ const getSystemUptime = (milliseconds: number) => {
   return timeString;
 };
 
+function getBytesToMegabytes(bytes: number) {
+  const megabytes = bytes / 1048576;
+  if (megabytes > 1024) {
+    return `${Math.round((megabytes / 1024) * 10) / 10} GB`;
+  }
+  return `${Math.round(megabytes)} MB`;
+}
+
 export {
   getUrl,
   getBatteryState,
   getBatteryLevel,
   getDeviceType,
   getSystemUptime,
+  getBytesToMegabytes,
 };
