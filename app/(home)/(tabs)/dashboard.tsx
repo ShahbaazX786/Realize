@@ -18,6 +18,7 @@ import {
   Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Battery from "expo-battery";
 import * as Device from "expo-device";
 import { useCallback, useEffect, useState } from "react";
@@ -56,7 +57,16 @@ const Dashboard = () => {
     ]);
     // upTimeRef.current = systemUptime;
     setDeviceInfo({ isRooted, features, maxMemory, upTime: systemUptime });
+    await storeLocalData();
   }, []);
+
+  const storeLocalData = async () => {
+    try {
+      await AsyncStorage.setItem("device_info", JSON.stringify(deviceInfo));
+    } catch (error) {
+      console.error("Error storing data", error);
+    }
+  };
 
   useEffect(() => {
     fetchDeviceInfo();
