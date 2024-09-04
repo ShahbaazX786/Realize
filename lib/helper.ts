@@ -55,7 +55,7 @@ const getSystemUptime = (milliseconds: number) => {
   let seconds = totalSeconds % 60;
 
   // Format time string
-  let timeString = `${String(days).padStart(2, "0")}:${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  let timeString = `${String(days).padStart(2, "0")} Days - ${String(hours).padStart(2, "0")} Hours - ${String(minutes).padStart(2, "0")} Minutes ${String(seconds).padStart(2, "0")}`;
 
   return timeString;
 };
